@@ -1,7 +1,7 @@
-import { useCall, VideoPreview } from '@stream-io/video-react-sdk'
+import { DeviceSettings, useCall, VideoPreview } from '@stream-io/video-react-sdk'
 import React, { useEffect, useState } from 'react'
 
-const Meetingsetup = () => {
+const Meetingsetup = ({setisSetupComplete}:{setisSetupComplete:(value:boolean)=>void}) => {
     const [isMicCamToggleOn,setMicCamToggleOn]=useState(false)
     const call=useCall();
 
@@ -23,6 +23,19 @@ const Meetingsetup = () => {
     text-white'>
         <h1 className='text-2xl font-bold'>Setup</h1>
         <VideoPreview/>
+        <div className='flex h-16 items-center justify-center gap-2
+        font-medium'>
+            <label className='flex items-center justify-center gap-2 font-medium'>
+            <input type="checkbox" checked={isMicCamToggleOn}  onChange={(e)=>setMicCamToggleOn(e.target.checked)}/>
+            join with mic and camera off
+            </label>
+            <DeviceSettings/>
+        </div>
+        <button className='rounded-md bg-green-500 px-4 py-2.5' onClick={()=>{
+            call.join();
+            setisSetupComplete(true)
+        }}></button>
+        
       
     </div>
   )
